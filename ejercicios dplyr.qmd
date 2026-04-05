@@ -1,0 +1,255 @@
+---
+title: "Práctica con dplyr y gapminder"
+author: "Enith Sofia Pachón"
+date: "2026-03-31"
+
+format:
+  html:
+    theme: darkly
+    toc: true
+    toc-depth: 3
+    css: styles.css
+
+execute:
+  warning: false
+  message: false
+---
+
+# Introducción
+
+Este documento contiene la resolución de los ejercicios usando el paquete **dplyr** y el conjunto de datos **gapminder**. El archivo es autocontenido e incluye explicaciones de cada punto.
+
+Usaremos las siguientes librerías:
+
+```{r}
+library(dplyr)
+library(gapminder)
+```
+
+# Ejercicios y soluciones
+
+## 1. Seleccionar columnas country, year y lifeExp
+
+Seleccione únicamente las columnas `country`, `year` y `lifeExp` del conjunto de datos.
+
+```{r}
+gapminder %>% select(country, year, lifeExp)
+```
+
+**Explicación:** La función `select()` permite escoger columnas específicas, lo cual es útil cuando se quiere reducir el tamaño del dataset o concentrarse en variables puntuales para análisis posteriores. En este caso, extraemos el país, el año y la esperanza de vida, tres variables esenciales para entender la evolución demográfica. `country`, `year` y `lifeExp` del conjunto de datos.
+
+## 2. Filtrar observaciones del año 2007
+
+Muestre únicamente las observaciones correspondientes al año 2007, de manera que solo se visualicen los datos más recientes del conjunto.
+
+```{r}
+gapminder %>% filter(year == 2007)
+```
+
+**Explicación:** La función `filter()` permite seleccionar filas basadas en condiciones lógicas. Aquí filtramos el año 2007, lo que es útil cuando se quiere analizar un año específico y evitar mezclarlo con datos de otros periodos.:\*\* `filter()` mantiene solo las filas que cumplen la condición indicada.
+
+## 3. Filtrar países de Asia
+
+Seleccione únicamente los países pertenecientes al continente asiático para analizar esta región específica.
+
+```{r}
+gapminder %>% filter(continent == "Asia")
+```
+
+**Explicación:** `filter()` permite restringir el conjunto de datos a condiciones categóricas, como el continente. Esto ayuda a realizar comparaciones regionales o análisis enfocados en una sola parte del mundo.:\*\* Se usa `filter()` para limitar el conjunto de datos a un continente específico.
+
+## 4. Filtrar filas con esperanza de vida mayor a 70
+
+**Enunciado:** Identifique y muestre únicamente las observaciones en las que la esperanza de vida sea superior a 70 años.
+
+```{r}
+gapminder %>% filter(lifeExp > 70)
+```
+
+**Explicación:** Esta tarea requiere aplicar una comparación numérica dentro de `filter()`. Es útil cuando se desea observar únicamente los países con condiciones demográficas favorables o por encima de un umbral determinado.:\*\* Se aplica una condición numérica simple usando `filter()`.
+
+## 5. Ordenar por esperanza de vida ascendente
+
+Ordene todo el dataset según la esperanza de vida, desde la más baja hasta la más alta.
+
+```{r}
+gapminder %>% arrange(lifeExp)
+```
+
+**Explicación:** `arrange()` organiza las filas en un orden específico de acuerdo con una variable. Ordenar los datos permite identificar rápidamente qué países tienen los valores más bajos o más altos y facilita comparaciones visuales.
+
+## 6. Ordenar por PIB per cápita en orden descendente
+
+Ordene el conjunto de datos desde el mayor hasta el menor valor de `gdpPercap`.
+
+```{r}
+gapminder %>% arrange(desc(gdpPercap))
+```
+
+**Explicación:** `arrange(desc())` permite ordenar los datos de forma descendente. Esto resulta útil para identificar qué países presentan los mayores niveles de ingresos per cápita.
+
+## 7. Crear columna gdp_total
+
+Cree una nueva columna llamada `gdp_total` que represente el PIB total del país (población × PIB per cápita).
+
+```{r}
+gapminder %>% mutate(gdp_total = gdpPercap * pop)
+```
+
+**Explicación:** `mutate()` permite generar nuevas variables derivadas de las existentes. Este cálculo ayuda a comparar la magnitud económica total entre países.
+
+## 8. Países con población mayor a 100 millones en 2007
+
+Filtre los países que, en el año 2007, tienen más de 100 millones de habitantes.
+
+```{r}
+gapminder %>% filter(year == 2007, pop > 100000000)
+```
+
+**Explicación:** Combinando condiciones dentro de `filter()`, se puede crear subconjuntos específicos como países muy poblados.
+
+## 9. Países de Europa mostrando solo country y gdpPercap
+
+Seleccione únicamente los países europeos y muestre solo sus columnas `country` y `gdpPercap`.
+
+```{r}
+gapminder %>% filter(continent == "Europe") %>% select(country, gdpPercap)
+```
+
+**Explicación:** La combinación de `filter()` y `select()` permite enfocar el análisis en regiones específicas reduciendo la cantidad de información mostrada.
+
+## 10. Promedio de esperanza de vida por continente
+
+Calcule el valor promedio de esperanza de vida en cada continente.
+
+```{r}
+gapminder %>% group_by(continent) %>% summarise(avg_lifeExp = mean(lifeExp))
+```
+
+**Explicación:** `group_by()` y `summarise()` permiten generar estadísticas agregadas útiles para comparar regiones.
+
+## 11. Promedio de PIB per cápita por continente y año
+
+Calcule el PIB per cápita promedio para cada continente en cada año disponible.
+
+```{r}
+gapminder %>% group_by(continent, year) %>% summarise(avg_gdpPercap = mean(gdpPercap))
+```
+
+**Explicación:** Agrupar por continente y año permite analizar tendencias temporales dentro de cada región.
+
+## 12. Máxima esperanza de vida por continente
+
+Identifique el valor máximo de esperanza de vida registrado dentro de cada continente.
+
+```{r}
+gapminder %>% group_by(continent) %>% summarise(max_lifeExp = max(lifeExp))
+```
+
+**Explicación:** La función `max()` permite encontrar el valor extremo superior en cada grupo.
+
+## 13. Número de países en cada continente
+
+Cuente cuántos países están representados dentro de cada continente en el dataset.
+
+```{r}
+gapminder %>% group_by(continent) %>% summarise(n_countries = n_distinct(country))
+```
+
+**Explicación:** `n_distinct(country)` permite contar valores únicos, útil para explorar la distribución geográfica del dataset.
+
+## 14. Población total por continente
+
+Calcule la población total de cada continente sumando las poblaciones de todos sus países.
+
+```{r}
+gapminder %>% group_by(continent) %>% summarise(total_pop = sum(pop))
+```
+
+**Explicación:** Esta operación permite evaluar el tamaño poblacional total por región.
+
+## 15. Promedio de esperanza de vida por año en las Américas
+
+**Enunciado:** Calcule cómo evoluciona a través del tiempo la esperanza de vida promedio en el continente americano.
+
+```{r}
+gapminder %>% filter(continent == "Americas") %>% group_by(year) %>% summarise(avg_lifeExp = mean(lifeExp))
+```
+
+**Explicación:** El uso de `filter()` seguido de un `group_by(year)` permite estudiar la evolución temporal dentro de una región.
+
+## 16. Top 10 países con mayor PIB per cápita en 2007
+
+Seleccione los diez países más ricos del mundo, considerando su PIB per cápita en 2007
+
+```{r}
+gapminder %>% filter(year == 2007) %>% arrange(desc(gdpPercap)) %>% slice_head(n = 10)
+```
+
+**Explicación:** Ordenar de forma descendente y tomar las primeras observaciones permite clasificar rápidamente a los países con mayores ingresos.
+
+## 17. País con mayor esperanza de vida en cada año
+
+Encuentre el país que encabeza la esperanza de vida en cada año disponible.
+
+```{r}
+gapminder %>% group_by(year) %>% slice_max(lifeExp, n = 1)
+```
+
+**Explicación:** `slice_max()` permite seleccionar el valor máximo de cada grupo, útil para identificar líderes temporales.
+
+## 18. Mediana del PIB per cápita por continente
+
+Calcule la mediana del PIB per cápita por continente.
+
+```{r}
+gapminder %>% group_by(continent) %>% summarise(median_gdpPercap = median(gdpPercap))
+```
+
+**Explicación:** La mediana es una estadística robusta frente a valores extremos y ayuda a comparar regiones de forma más representativa.
+
+## 19. Cambio en esperanza de vida entre 1952 y 2007
+
+Determine cuánto cambió la esperanza de vida en cada país entre los años 1952 y 2007.
+
+```{r}
+library(tidyr)
+gapminder %>%
+  filter(year %in% c(1952, 2007)) %>%
+  select(country, year, lifeExp) %>%
+  pivot_wider(names_from = year, values_from = lifeExp) %>%
+  mutate(change_lifeExp = `2007` - `1952`)
+```
+
+**Explicación:** Reestructurar la tabla con `pivot_wider()` permite comparar dos años directamente y calcular diferencias.
+
+## 20. Cinco países con mayor aumento del PIB per cápita
+
+Identifique los cinco países que experimentaron el mayor crecimiento en su PIB per cápita entre 1952 y 2007.
+
+```{r}
+library(tidyr)
+gapminder %>%
+  filter(year %in% c(1952, 2007)) %>%
+  select(country, year, gdpPercap) %>%
+  pivot_wider(names_from = year, values_from = gdpPercap) %>%
+  mutate(change_gdp = `2007` - `1952`) %>%
+  arrange(desc(change_gdp)) %>%
+  slice_head(n = 5)
+```
+
+**Explicación:** Ordenar por la variación en el crecimiento permite detectar patrones de desarrollo económico acelerado.
+
+# Bonus Challenge
+
+**Enunciado:** Construya un pipeline que filtre los datos del año 2007, agrupe por continente, calcule la esperanza de vida promedio y ordene los resultados de mayor a menor.
+
+```{r}
+gapminder %>%
+  filter(year == 2007) %>%
+  group_by(continent) %>%
+  summarise(avg_lifeExp = mean(lifeExp)) %>%
+  arrange(desc(avg_lifeExp))
+```
+
+**Explicación:** Este ejercicio combina filtrado, agrupación, resumen y ordenamiento en una secuencia fluida, demostrando la potencia de los pipelines con `%>%`.

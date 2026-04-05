@@ -1,0 +1,555 @@
+---
+title: "Análisis de Datos con ggplot2"
+author: "Tu Nombre"
+date: today
+format:
+  html:
+    theme: cosmo
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    code-fold: false
+    code-tools: true
+    df-print: paged
+    highlight-style: github
+execute:
+  echo: true
+  warning: false
+  message: false
+  fig-align: center
+  fig-width: 7
+  fig-height: 5
+  dpi: 300
+lang: es
+---
+
+## Introducción
+
+En este documento se desarrollan diferentes ejercicios de visualización de datos utilizando la librería \`ggplot2\`.\
+Cada punto incluye el enunciado, su solución, interpretación y análisis, permitiendo una comprensión clara para cualquier tipo de audiencia.
+
+```{r}
+library(ggplot2)
+
+theme_set(
+  theme_minimal() +
+    theme(
+      plot.title = element_text(size = 18, face = "bold", hjust = 0.5),
+      plot.subtitle = element_text(size = 12, hjust = 0.5),
+      axis.title = element_text(size = 13),
+      axis.text = element_text(size = 11),
+      legend.position = "bottom",
+      panel.grid.major = element_line(color = "gray80"),
+      panel.grid.minor = element_blank()
+    )
+)
+```
+
+# Student Data Visualization
+
+## Datos
+
+```{r}
+students <- data.frame(
+  id = 1:20,
+  hours_study = c(2,3,4,5,6,3,4,7,8,5,6,7,3,2,9,10,4,6,8,5),
+  score = c(50,55,65,70,75,60,66,80,85,72,74,78,58,52,90,95,67,76,88,73),
+  gender = rep(c("Male","Female"), 10),
+  major = rep(c("Engineering","Business","Arts","Science"), 5)
+)
+```
+
+## Gráfico de dispersión {style="blue"}
+
+**Enunciado:** Relación entre horas de estudio y calificación.
+
+```{r}
+ggplot(students, aes(hours_study, score, color = gender)) +
+  geom_point(size = 3, alpha = 0.8) +
+  geom_smooth(method = "lm", se = FALSE)
+```
+
+**Interpretación:**\
+Se observa que a medida que aumentan las horas de estudio, también aumentan las calificaciones.
+
+**Análisis:**\
+Esto indica una correlación positiva clara. El estudio es un factor determinante en el rendimiento académico, por lo que fomentar hábitos de estudio puede mejorar los resultados.
+
+## Bloxplot por género {style="blue"}
+
+```{r}
+ggplot(students, aes(gender, score, fill = gender)) +
+  geom_boxplot()
+```
+
+**Interpretación:**\
+Las distribuciones de calificaciones entre géneros son similares.
+
+**Análisis:**\
+No se evidencian diferencias significativas, lo que sugiere igualdad en el desempeño académico entre géneros.
+
+##  Histograma de calificaciones {style="blue"}
+
+```{r}
+ggplot(students, aes(score)) +
+  geom_histogram(bins = 8, fill = "#2C7FB8", color = "white")
+```
+
+**Interpretación:**\
+La mayoría de los estudiantes se encuentran en rangos de calificación medios-altos.
+
+**Análisis:**\
+Esto indica un buen rendimiento general del grupo, con pocos estudiantes en niveles bajos.
+
+## Faceting por carrera {style="blue"}
+
+```{r}
+ggplot(students, aes(hours_study, score, color = gender)) +
+  geom_point() +
+  facet_wrap(~major)
+```
+
+**Interpretación:**\
+Se observan patrones diferentes en cada carrera.
+
+**Análisis:**\
+Cada área académica puede tener distintos niveles de exigencia, lo que influye en el rendimiento
+
+## Conclusión: {style="blue"}
+
+El análisis de los datos de estudiantes evidencia que existe una relación positiva entre las horas de estudio y el rendimiento académico, lo que confirma la importancia del esfuerzo individual en los resultados obtenidos.
+
+Además, no se identifican diferencias significativas en el desempeño según el género, lo que sugiere condiciones equitativas en el proceso de aprendizaje. Sin embargo, al analizar por carrera, se observan variaciones que pueden estar relacionadas con el nivel de exigencia o las características propias de cada área académica.
+
+En conjunto, las visualizaciones permiten concluir que el tiempo dedicado al estudio es el factor más determinante en el rendimiento, mientras que otros factores como la carrera pueden influir de manera complementaria.
+
+# Business Data Visualization
+
+## Datos
+
+```{r}
+sales <- data.frame(
+  month = rep(month.abb[1:12], 4),
+  region = rep(c("North","South","East","West"), each = 12),
+  sales = c(
+    120,130,125,140,150,160,170,165,155,145,135,125,
+    100,110,105,120,130,135,140,138,132,125,118,110,
+    90,95,100,110,115,120,125,123,118,112,105,98,
+    80,85,88,95,100,105,110,108,102,97,90,85
+  ),
+  marketing_spend = c(
+    20,22,21,23,25,26,28,27,26,24,23,22,
+    18,19,18,20,22,23,24,23,22,21,20,19,
+    15,16,17,18,19,20,21,20,19,18,17,16,
+    12,13,14,15,16,17,18,17,16,15,14,13
+  ),
+  employees = rep(c(50,45,40,35), each = 12)
+)
+```
+
+##  Scatter plot marketing vs ventas {style="blue"}
+
+```{r}
+ggplot(sales, aes(marketing_spend, sales, color = region)) +
+  geom_point(size = 3) +
+  geom_smooth(method = "lm", se = FALSE)
+```
+
+**Interpretación:**\
+Existe una relación positiva entre marketing y ventas.
+
+**Análisis:**\
+Invertir en marketing es clave para aumentar ingresos, lo cual es fundamental para la toma de decisiones empresariales.
+
+## Gráfico de líneas {style="blue"}
+
+```{r}
+ggplot(sales, aes(month, sales, color = region, group = region)) +
+  geom_line() +
+  geom_point()
+```
+
+**Interpretación:**\
+Se observan tendencias a lo largo del tiempo.
+
+**Análisis:**\
+Las variaciones pueden deberse a factores como estacionalidad o estrategias comerciales.
+
+## Bloxplot por región {style="blue"}
+
+```{r}
+ggplot(sales, aes(region, sales, fill = region)) +
+  geom_boxplot()
+```
+
+**Interpretación:**\
+Las ventas varían entre regiones.
+
+**Análisis:**\
+Algunas regiones son más rentables, lo que puede orientar inversiones futuras.
+
+## 1 Boxplot de ventas por región {style="blue"}
+
+```{r}
+ggplot(sales, aes(region, sales, fill = region)) +
+  geom_boxplot() +
+  labs(
+    title = "Distribución de ventas por región",
+    x = "Región",
+    y = "Ventas"
+  )
+```
+
+**Interpretación:**\
+El gráfico muestra cómo se distribuyen las ventas en cada región, incluyendo mediana, rango y posibles valores atípicos.
+
+**Análisis:**\
+Permite identificar qué regiones son más consistentes (menos variabilidad) y cuáles presentan mayor dispersión. Esto es clave para evaluar estabilidad en el rendimiento comercial.
+
+## 2 Histograma de inversión en marketing {style="blue"}
+
+```{r}
+ggplot(sales, aes(marketing_spend)) +
+  geom_histogram(bins = 10, fill = "#31A354", color = "white") +
+  labs(
+    title = "Distribución de la inversión en marketing",
+    x = "Inversión en marketing",
+    y = "Frecuencia"
+  )
+```
+
+**Interpretación:**\
+Se observa cómo se distribuyen los niveles de inversión en marketing.
+
+**Análisis:**\
+Permite identificar si la empresa invierte de forma uniforme o si hay concentraciones en ciertos rangos. Esto puede reflejar estrategias financieras o limitaciones presupuestarias.
+
+## 1 Gráfico de líneas facetado por región {style="blue"}
+
+```{r}
+ggplot(sales, aes(month, sales, group = region, color = region)) +
+  geom_line() +
+  facet_wrap(~region) +
+  labs(
+    title = "Evolución de ventas por región",
+    x = "Mes",
+    y = "Ventas"
+  ) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+**Interpretación:**\
+Cada gráfico muestra la evolución de ventas de una región específica.
+
+**Análisis:**\
+Facilita comparar tendencias individuales sin interferencia visual. Es útil para detectar patrones únicos en cada región.
+
+## Gráfico multivariable {style="blue"}
+
+```{r}
+ggplot(sales, aes(marketing_spend, sales,
+                  color = region,
+                  size = employees)) +
+  geom_point(alpha = 0.8) +
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(
+    title = "Relación multivariable: Marketing, ventas y empleados",
+    x = "Inversión en marketing",
+    y = "Ventas",
+    size = "Empleados"
+  )
+```
+
+**Interpretación:**\
+El gráfico combina múltiples variables: inversión, ventas, región y número de empleados.
+
+**Análisis:**\
+Este tipo de visualización permite comprender relaciones complejas. Se puede inferir que tanto el marketing como el tamaño de la empresa influyen en las ventas, lo cual es clave para la toma de decisiones estratégicas.
+
+## Conclusión: {style="blue"}
+
+El análisis de los datos de ventas evidencia una relación directa entre la inversión en marketing y los ingresos generados, lo que confirma la importancia de esta variable como motor del crecimiento empresarial.
+
+Asimismo, se identifican diferencias significativas entre regiones, tanto en el nivel de ventas como en su estabilidad, lo que sugiere que factores geográficos o estratégicos influyen en el desempeño comercial. La evolución temporal de las ventas también permite observar patrones que pueden estar asociados a estacionalidad o decisiones de negocio.
+
+Por otro lado, el uso de visualizaciones más avanzadas, como gráficos multivariables y facetas, permite comprender de manera integral la interacción entre distintas variables, como el número de empleados, la inversión y los resultados obtenidos.
+
+En conjunto, este análisis demuestra que la visualización de datos es una herramienta clave para la toma de decisiones, ya que permite identificar oportunidades de mejora, optimizar recursos y diseñar estrategias más efectivas.
+
+# Customer Churn
+
+## Datos {style="blue"}
+
+```{r}
+churn <- data.frame(
+  tenure = c(1,5,10,12,24,36,48,60,72,3,6,9,15,18,30,42,54,66,70,8),
+  monthly_charges = c(70,75,80,85,90,95,100,105,110,65,72,78,82,88,92,98,102,108,112,76),
+  total_charges = c(70,375,800,1020,2160,3420,4800,6300,7920,195,432,702,1230,1584,2760,4116,5508,7128,7840,608),
+  churn = rep(c("Yes","No"), 10)
+)
+```
+
+##  Scatter plot {style="blue"}
+
+```{r}
+ggplot(churn, aes(tenure, monthly_charges, color = churn)) +
+  geom_point(size = 3) +
+  geom_smooth(method = "lm", se = FALSE)
+```
+
+**Interpretación:**\
+Clientes con menor permanencia tienden a abandonar más.
+
+**Análisis:**\
+Los primeros meses son críticos para retener clientes, por lo que se deben fortalecer estrategias de fidelización.
+
+## Boxplot {style="blue"}
+
+```{r}
+ggplot(churn, aes(churn, monthly_charges, fill = churn)) +
+  geom_boxplot()
+```
+
+**Interpretación:**\
+Existen diferencias en los cargos entre clientes que se quedan y los que se van.
+
+**Análisis:**\
+Los precios pueden influir en la decisión de abandono.
+
+## Densidad {style="blue"}
+
+```{r}
+ggplot(churn, aes(monthly_charges, fill = churn)) +
+  geom_density(alpha = 0.5)
+```
+
+**Interpretación:**\
+Se observan diferentes distribuciones de cargos.
+
+**Análisis:**\
+Permite identificar segmentos de clientes con mayor riesgo de churn.
+
+## Conclusión: {style="blue"}
+
+El análisis del churn permite identificar patrones importantes en el comportamiento de los clientes. Se observa que la permanencia (tenure) está relacionada con la probabilidad de abandono, siendo los clientes más recientes los más propensos a retirarse.
+
+Asimismo, los cargos mensuales muestran diferencias entre los clientes que permanecen y los que abandonan, lo que sugiere que el costo del servicio puede influir en la decisión de continuar o no.
+
+Las visualizaciones también evidencian la existencia de distintos perfiles de clientes, lo cual es clave para segmentar estrategias de retención. En este sentido, el análisis gráfico se convierte en una herramienta fundamental para anticipar el churn y diseñar acciones que mejoren la fidelización.
+
+# Telco Customer Churn
+
+## Datos {style="blue"}
+
+```{r}
+library(readr)
+library(dplyr)
+
+churn_real <- read_csv("WA_Fn-UseC_-Telco-Customer-Churn.csv")
+
+# Convertir a factores
+churn_real$Churn <- as.factor(churn_real$Churn)
+churn_real$Contract <- as.factor(churn_real$Contract)
+churn_real$InternetService <- as.factor(churn_real$InternetService)
+```
+
+## Distribución de permanencia {style="blue"}
+
+```{r}
+ggplot(churn_real, aes(tenure)) +
+  geom_histogram(bins = 30, fill = "#3182BD", color = "white") +
+  labs(title = "Distribución de permanencia de clientes")
+```
+
+**Interpretación:**\
+Muestra cuánto tiempo permanecen los clientes en la empresa.
+
+**Análisis:**\
+Permite identificar si la mayoría de clientes son nuevos o antiguos, lo cual es clave para estrategias de fidelización.
+
+## Distribución de cargos mensuales  {style="blue"}
+
+```{r}
+ggplot(churn_real, aes(MonthlyCharges)) +
+  geom_histogram(bins = 30, fill = "#756BB1", color = "white") +
+  labs(title = "Distribución de cargos mensuales")
+```
+
+**Interpretación:**\
+Muestra cómo se distribuyen los precios que pagan los clientes.
+
+**Análisis:**\
+Permite identificar rangos de precios más frecuentes y posibles segmentos de mercado.
+
+## Distribución de cargos totales {style="blue"}
+
+```{r}
+ggplot(churn_real, aes(TotalCharges)) +
+  geom_histogram(bins = 30, fill = "#756BB1", color = "white") +
+  labs(title = "Distribución de cargos totales")
+```
+
+**Interpretación:**\
+Muestra el gasto acumulado de los clientes.
+
+**Análisis:**\
+Clientes con mayor permanencia tienden a tener mayores cargos acumulados.
+
+## Proporción de abandono {style="blue"}
+
+```{r}
+ggplot(churn_real, aes(Churn)) +
+  geom_bar(fill = "#756BB1") +
+  labs(title = "Proporción de clientes que abandonan")
+```
+
+**Interpretación:**\
+Muestra cuántos clientes abandonan vs permanecen.
+
+**Análisis:**\
+Permite medir el nivel de churn, indicador clave en negocios.
+
+## Boxplot cargos vs churn {style="blue"}
+
+```{r}
+ggplot(churn_real, aes(Churn, MonthlyCharges, fill = Churn)) +
+  geom_boxplot()
+```
+
+**Interpretación:**\
+Compara los costos entre clientes que se quedan y los que se van.
+
+**Análisis:**\
+Si los clientes que abandonan pagan más, el precio podría ser un factor de abandono.
+
+## Densidad de cargos {style="blue"}
+
+```{r}
+ggplot(churn_real, aes(MonthlyCharges, fill = Churn)) +
+  geom_density(alpha = 0.4)
+```
+
+**Interpretación:**\
+Muestra la distribución de cargos según churn.
+
+**Análisis:**\
+Permite identificar segmentos de alto riesgo.
+
+## Churn por tipo de contrato {style="blue"}
+
+```{r}
+ggplot(churn_real, aes(Contract, fill = Churn)) +
+  geom_bar(position = "fill")
+```
+
+**Interpretación:**\
+Muestra la proporción de abandono según contrato.
+
+**Análisis:**\
+Contratos cortos suelen tener mayor churn.
+
+## Churn por servicio de internet {style="blue"}
+
+```{r}
+ggplot(churn_real, aes(InternetService, fill = Churn)) +
+  geom_bar(position = "fill")
+```
+
+**Interpretación:**\
+Relaciona tipo de servicio con abandono.
+
+**Análisis:**\
+Algunos servicios pueden generar mayor insatisfacción.
+
+## Relación tenure vs cargos {style="blue"}
+
+```{r}
+ggplot(churn_real, aes(tenure, MonthlyCharges)) +
+  geom_point(alpha = 0.4)
+```
+
+**Interpretación:**\
+Relación entre tiempo y pagos.
+
+**Análisis:**\
+Ayuda a entender el comportamiento de clientes a lo largo del tiempo.
+
+## Con color (churn) {style="blue"}
+
+```{r}
+ggplot(churn_real, aes(tenure, MonthlyCharges, color = Churn)) +
+  geom_point(alpha = 0.4)
+```
+
+**Interpretación:**\
+Se diferencia comportamiento por churn.
+
+**Análisis:**\
+Permite identificar patrones de abandono.
+
+## Con regresión  {style="blue"}
+
+```{r}
+ggplot(churn_real, aes(tenure, MonthlyCharges, color = Churn)) +
+  geom_point(alpha = 0.4) +
+  geom_smooth(method = "lm")
+```
+
+**Interpretación:**\
+Se observa tendencia entre variables.
+
+**Análisis:**\
+Permite evaluar relación entre permanencia y costos.
+
+## Facet por contrato {style="blue"}
+
+```{r}
+ggplot(churn_real, aes(tenure, MonthlyCharges)) +
+  geom_point(alpha = 0.4) +
+  facet_wrap(~Contract)
+```
+
+**Interpretación:**\
+Comparación por tipo de contrato.
+
+**Análisis:**\
+Cada contrato presenta comportamientos distintos.
+
+## Facet por internet {style="blue"}
+
+```{r}
+ggplot(churn_real, aes(tenure, MonthlyCharges)) +
+  geom_point(alpha = 0.4) +
+  facet_wrap(~InternetService)
+```
+
+**Interpretación:**\
+Comparación por servicio.
+
+**Análisis:**\
+Permite identificar segmentos críticos.
+
+## Gráfico burbuja {style="blue"}
+
+```{r}
+ggplot(churn_real, aes(tenure, TotalCharges,
+                       size = MonthlyCharges,
+                       color = Churn)) +
+  geom_point(alpha = 0.6)
+```
+
+**Interpretación:**\
+Integra varias variables.
+
+**Análisis:**\
+Permite analizar relaciones complejas de forma visual.
+
+## Conclusión: {style="blue"}
+
+El análisis del dataset real de churn permite identificar patrones más complejos y cercanos a situaciones del mundo empresarial. Se evidencia que la permanencia del cliente (tenure) es un factor clave, ya que los usuarios con menor tiempo en la empresa presentan una mayor probabilidad de abandono.
+
+Asimismo, variables como el tipo de contrato y el servicio de internet influyen significativamente en el churn, mostrando que los contratos más flexibles suelen estar asociados a mayores tasas de abandono, mientras que los contratos a largo plazo favorecen la retención.
+
+El análisis de los cargos mensuales y totales también revela que el costo del servicio puede impactar en la decisión del cliente, especialmente cuando se combina con otros factores como la duración del contrato o la experiencia del servicio.
+
+En conjunto, las visualizaciones permiten comprender la interacción entre múltiples variables, lo que facilita la identificación de perfiles de clientes en riesgo. Esto demuestra que el uso de datos reales y herramientas de visualización es fundamental para diseñar estrategias efectivas de fidelización y mejorar la toma de decisiones en contextos empresariales.

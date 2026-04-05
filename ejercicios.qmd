@@ -1,0 +1,154 @@
+---
+title: "Ejercicios"
+author: "Enith Sofia Pachón"
+date: "2026-03-31"
+
+format:
+  html:
+    theme: lumen
+    toc: true
+    toc-depth: 3
+
+execute:
+  warning: false
+  message: false
+---
+
+## 
+
+# INTRODUCCION
+
+Las calificaciones pueden variar dependiendo del horario en que se estudie, ya sea en la mañana, tarde o noche. Analizar estas diferencias resulta fundamental, ya que permite identificar si el momento del día influye en el desempeño. Comprender estas variaciones brinda información valiosa para interpretar de manera más precisa el rendimiento académico.
+
+## NOTAS
+
+```{r}
+#| echo: false
+Mañana <- c(4.0 , 3.5, 3.8, 3.6, 4.1)
+Tarde <- c(3.8, 3.5, 3.0, 2.9)
+Noche <- c(3.1, 2.5, 2.6)
+```
+
+```{r}
+#| echo: false
+tabla <- data.frame(
+  Mañana = Mañana,
+  Tarde  = c(Tarde, rep(NA, length(Mañana) - length(Tarde))),
+  Noche  = c(Noche, rep(NA, length(Mañana) - length(Noche))))
+```
+
+```{r}
+#| echo: false
+tabla
+```
+
+# TAMAÑO
+
+El comando **"Length"** permite conocer la cantidad de elementos que contiene un vector; en este caso, corresponde al número de notas según la jornada.
+
+```{r}
+length(Mañana)
+```
+
+En la jornada de la mañana solo hay 5 notas
+
+```{r}
+length(Tarde)
+```
+
+En la jornada tarde hay 4 notas disponibles
+
+```{r}
+length(Noche)
+```
+
+En la jornada noche es donde menos notas hay
+
+# MEDIA
+
+Se utiliza para sintetizar un conjunto de datos en un único valor. Se obtiene al sumar todos los valores y dividirlos entre el total de datos. Es útil porque proporciona una visión general de dónde se agrupan los resultados.
+
+```{r}
+mean(Mañana)
+```
+
+$$  \large x_{1} = \frac{4.0 + 3.5 + 3.8 + 3.6 + 4.1}{5} = 3.8 $$ Esto indica que, en promedio, las calificaciones en la jornada de la mañana se sitúan alrededor de 3.8. La mayoría de los estudiantes en ese horario obtienen notas cercanas a ese valor, lo que sugiere un desempeño relativamente alto.
+
+```{r}
+mean(Tarde)
+```
+
+$$ \large x_{2} = \frac{3.8 + 3.5 + 3.0 + 2.9}{4} = 3.3 $$ Esto señala que, en promedio, las notas de la jornada matutina se ubican cerca de 3.8. La mayoría de los estudiantes en ese horario presenta calificaciones próximas a ese valor, lo que refleja un nivel de rendimiento relativamente alto.
+
+```{r}
+mean(Noche)
+```
+
+$$ \large x_{3}=\frac{3.1 + 2.5 + 2.6}{3} = 2.7333 $$
+
+El promedio en la jornada nocturna es el más bajo. Esto sugiere que las calificaciones de los estudiantes en ese horario se sitúan alrededor de 2.7, evidenciando un desempeño inferior en comparación con las demás jornadas.
+
+# VARIANZA
+
+Es un indicador estadístico que muestra qué tan alejados están los datos con respecto al promedio. Es decir, permite saber si los valores son similares entre sí o si presentan grandes variaciones. Se obtiene calculando la diferencia entre cada dato y la media, elevándola al cuadrado y luego promediando esos resultados.
+
+$$Var(X) = \frac{\sum (x_i - \bar{x})^2}{n}$$
+
+```{r}
+var(Mañana)
+```
+
+La variabilidad es muy reducida. Las calificaciones de la jornada de la mañana son bastante uniformes, ya que se encuentran próximas al promedio de 3.8, lo que evidencia un grupo con un desempeño estable.
+
+```{r}
+var(Tarde)
+```
+
+La variabilidad es la más elevada. Las calificaciones de la jornada de la tarde presentan mayor dispersión, ya que algunos estudiantes se apartan más del promedio de 3.3, lo que refleja diferencias más notorias.
+
+```{r}
+var(Noche)
+```
+
+La variabilidad es moderada. Las calificaciones de la jornada nocturna muestran cierta dispersión, aunque inferior a la de la tarde. No son tan uniformes como en la mañana ni tan heterogéneas como en la tarde, ubicándose en un nivel intermedio.{r} #\| echo: false medias \<- c(3.8, 3.3, 2.73) pesos \<- c(5, 4, 3)
+
+# MEDIA PONDERADA
+
+Es un tipo de promedio en el que cada dato tiene una ponderación o importancia diferente. No todos los valores contribuyen de la misma manera, ya que algunos tienen mayor influencia en el resultado final al representar un grupo más amplio o al asignárseles mayor relevancia. $$bar{x}_p = \frac{\sum (x_i \cdot w_i)}{\sum w_i}$$
+
+```{r}
+promedios <- c(3.8, 3.3, 2.733333)
+estudiantes <- c(5, 4, 3)
+media_global <-weighted.mean(promedios, estudiantes)
+media_global
+```
+
+Refleja la calificación promedio global de toda la población —mañana, tarde y noche—, obtenida de forma equitativa teniendo en cuenta el tamaño de cada grupo.
+
+# INTRAVARIANZA
+
+Cada conjunto posee sus propias calificaciones y, en consecuencia, su propia variabilidad interna. La intravarianza corresponde al promedio ponderado de esas varianzas.$$\text{Intravarianza} = \frac{\sum w_i \cdot s_i^2}{\sum w_i}$$
+
+```{r}
+varianzas <- c(0.065, 0.18, 0.1033333)
+
+media_varianzas <- weighted.mean(varianzas, estudiantes)
+media_varianzas
+```
+
+Indica la variabilidad media dentro de los grupos, considerando el tamaño de cada uno. Es un indicador de la dispersión presente en cada jornada. Dado que el valor es bajo, sugiere que los estudiantes de cada grupo presentan calificaciones bastante uniformes.
+
+# INTERVARIANZA
+
+Evalúa la variación entre los promedios de los grupos en relación con la media global ponderada. $$\text{Intervarianza} = \frac{\sum w_i \cdot (\bar{x}_i - \bar{x}_p)^2}{\sum w_i}$$
+
+```{r}
+var_medias <- sum(estudiantes * (promedios - media_global)^2) / sum(estudiantes)
+var_medias
+```
+
+Cuantifica qué tanto difieren los promedios de los grupos. Para calcularlo, se toma la diferencia entre la media de cada grupo y la media global, se eleva al cuadrado, se pondera según el tamaño del grupo y luego se obtiene el promedio. El valor de 0.181 muestra que las medias no son iguales, sino que existe una variación moderada entre ellas.
+
+# CONCLUSION
+
+El análisis de la varianza indica que la media ponderada global de las calificaciones es cercana a 3.37, lo que corresponde al promedio general de todos los estudiantes teniendo en cuenta el tamaño de cada jornada. La intravarianza, con un valor de 0.084, muestra que dentro de cada grupo las notas son bastante uniformes, con baja dispersión interna. Por otro lado, la intervarianza de 0.181 evidencia que hay diferencias notables entre los promedios de los grupos, lo que sugiere que las jornadas no comparten el mismo nivel promedio.
