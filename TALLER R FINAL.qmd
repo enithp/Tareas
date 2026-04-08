@@ -1,0 +1,1602 @@
+---
+title: "TALLER R"
+author: "Enith Sofia Pachón Carreón"
+date: "4/2/26"
+format:
+  html:
+    html-math-method: mathjax
+    theme: darkly
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    code-fold: true
+    code-tools: true
+    fontsize: 1.1em
+    linestretch: 1.5
+editor: visual
+---
+
+# INTRODUCIÓN
+
+El taller de R básico tiene como objetivo ayudarnos a conocer y practicar las funciones más importantes de este lenguaje de programación. R es una herramienta muy usada para trabajar con datos, hacer cálculos y crear gráficos, y aprenderlo desde lo más simple nos permite entender cómo funciona y cómo podemos aprovecharlo en diferentes áreas.
+
+# CALCULAR
+
+![](images/Captura%20de%20pantalla%202026-04-02%20191014.png)
+
+## 
+
+```{r}
+(1 + sqrt(5)) / 2
+```
+
+```{r}
+1 + 3.3 * log(50)
+```
+
+## 
+
+```{r}
+1 - exp(-1)
+```
+
+## 
+
+```{r}
+2 + 3^(1/5)
+```
+
+## 
+
+```{r}
+choose(5, 2)
+
+```
+
+## 
+
+```{r}
+1 / (1 + 1 / (1 + 1 / 2))
+
+```
+
+## 
+
+```{r}
+(1 + sqrt(1 + 2))^(1/3)
+```
+
+## 
+
+```{r}
+1 + log(1/2)
+
+```
+
+## 
+
+```{r}
+log(8, base = 2)
+
+```
+
+## 
+
+```{r}
+sin(pi)
+```
+
+En R, cuando calculamos sin(pi) debería dar exactamente 0, porque matemáticamente sin(pi)=0 Sin embargo, lo que aparece en la consola es un número muy pequeño como 1.224606e-16. Esa notación significa 1.224606×10 a la menos 16, que en decimal es 0.0000000000000001224606. Este valor no es realmente distinto de cero, sino un error de redondeo que ocurre porque la computadora no puede representar pi con precisión infinita, solo con un número limitado de decimales. Al usar esa aproximación, el resultado no es exactamente cero, sino un número diminuto que se considera prácticamente cero.
+
+## 
+
+```{r}
+factorial(10)
+```
+
+## 
+
+```{r}
+((1 + sqrt(5)) / 2)^(-1)
+```
+
+## 
+
+```{r}
+2^(3^4)
+```
+
+## 
+
+```{r}
+(2^3)^4
+```
+
+## 
+
+```{r}
+(2/3) / 4
+```
+
+## 
+
+```{r}
+2 / (3/4)
+```
+
+## 
+
+```{r}
+7 %% 2
+```
+
+## 
+
+```{r}
+7 %/% 2
+```
+
+# DADAS LAS VARIABLES
+
+```{r}
+a <- 1
+b <- 2
+3 -> d
+f <<- 1L
+```
+
+## QUE HACE?
+
+## 
+
+```{r}
+a
+```
+
+Lo que nos muestra es el numero de la variable el cual es 1.
+
+## 
+
+```{r}
+print(a)
+```
+
+Lo que realiza es que imprime el valor de la variable en la consola el cual tambien seria 1.
+
+## 
+
+```{r}
+(a)
+```
+
+Al poner a entre parentesis no afecta nada en este caso y nos va a seguir mostando la variable.
+
+## 
+
+```{r}
+e <- a+b
+```
+
+En este caso se crea una variable la cual es "e" la cual se crea sumando a= 1 y b=2 ese número queda guardado dentro de la variable "e". Es decir, queda guardada en R.
+
+## 
+
+```{r}
+(e <- a+b)
+```
+
+Hace exactamente la misma asignación guarda la suma de a+b en la variable e. La diferencia es que, al ponerlo entre paréntesis, R no solo realiza la asignación, sino que también muestra inmediatamente el resultado en pantalla.
+
+## 
+
+```{r}
+d
+```
+
+Nos muestra el valor de "d" el cual es 3
+
+## 
+
+```{r}
+f
+
+```
+
+El codigo `f <<- 1L` crea una variable llamada f y le asigna el valor 1 en tipo entero. La diferencia entre escribir 1 y 1L es que 1 normalmente se guarda como un número de tipo numerico ya sea decimal, mientras que 1L se guarda explícitamente como un entero. Además, el operador `<<-` no es igual a `<-` mientras `<-` asigna la variable en el entorno actual, `<<-` busca en entornos superiores y asigna allí, lo que significa que puede modificar variables globales o externas.
+
+## 
+
+```{r}
+exists("d")
+```
+
+Devuelve TRUE porque la variable "d" sí existe.
+
+## 
+
+```{r}
+exists("zz")
+```
+
+Nos muestra FALSE porque no existe ninguna variable "zz".
+
+# VECTOR NUMERICO
+
+## Sort(x)
+
+```{r}
+sort(c(139,5,35,92))
+```
+
+Esta función nos ayuda a organizar de menor a mayor.
+
+## Rev(x)
+
+```{r}
+rev(c(283,9,11,42))
+```
+
+La función **rev(x)** invierte el orden de los elementos, ahora la organización es de menor a mayor.
+
+## Sum(x)
+
+```{r}
+sum(c(243,0.62,2,13))
+```
+
+Esto nos ayuda a sumar todos los valores del vector.
+
+## Prod(x)
+
+```{r}
+prod(c(3,34,1,1))
+```
+
+Esta función multiplica todos los valores del vector, se utiliza haya allar el producto de los numeros.
+
+## Length(x)
+
+```{r}
+length(c(45,2,2,23,45,2,0,35,245))
+```
+
+Esto nos ayuda a saber el numero exacto de datos que tiene un vector,Es decir, el tamaño del conjunto de datos.
+
+## Min(x)
+
+```{r}
+min(c(0.1,80,19,21,0.01))
+```
+
+Esta función nos muestra el valor mas pequeño del vector.
+
+## Max(x)
+
+```{r}
+max(c(245,245.1,19,21,0.01))
+```
+
+La función **max(x)** nos muestra el valor mas grande en el vector.
+
+## Unique(x)
+
+```{r}
+unique(c(34,2,2,24,283,52,34,52,52,52,1))
+```
+
+Esto nos muestra el vector sin datos repetidos.
+
+## Duplicated(x)
+
+```{r}
+duplicated(c(11,2,2,13,23,23,11,67))
+```
+
+Nos muestra TRUE o FALSE a los valores que ya aparecieron antes.
+
+## Rank(x)
+
+```{r}
+rank(c(5,12,16,22))
+```
+
+Asigna un “puesto” a cada valor según su tamaño. Es como ordenar pero mostrando la posición relativa.
+
+## Cumsum(x)
+
+```{r}
+cumsum(c(9,1,20))
+```
+
+Calcula la suma acumulada, mostrando cómo se va sumando paso a paso.
+
+## Mean(x)
+
+```{r}
+mean(c(30,10,20,22))
+```
+
+Calcula el promedio, es decir, el valor central de los datos.
+
+## Sd(x)
+
+```{r}
+sd(c(15,16,25))
+```
+
+Calcula la desviación estándar, que mide cuánto se alejan los valores del promedio.
+
+## Var(x)
+
+```{r}
+var(c(322,89,22))
+```
+
+Calcula la varianza, otra medida de dispersión que indica la variabilidad de los datos.
+
+## Summary(x)
+
+```{r}
+summary(c(33,123,245,2,0,23))
+```
+
+Da un resumen estadístico completo: mínimo, máximo, mediana, promedio y cuartiles.
+
+## Any(x\<0)
+
+```{r}
+any(c(54,-192,7)<0)
+```
+
+Devuelve TRUE si algún valor es menor que 0, FALSE si no.
+
+## Table(x)
+
+```{r}
+table(c(34,23,23,83,67,20,59,60,59,99,23))
+```
+
+Cuenta cuántas veces aparece cada valor, creando una tabla de frecuencias.
+
+## Sample(x,2,replace=TRUE)
+
+```{r}
+sample(c(34,5,58),5,replace=TRUE)
+```
+
+Toma una muestra aleatoria de 2 valores del vector, permitiendo repetir.
+
+# FUNCIONES REP() Y SEQ()
+
+## 1,2,3,4,5,6,7
+
+```{r}
+1:7
+```
+
+Esta función crea una secuencia de números enteros consecutivos.
+
+## d,d,d,d,d,d,d,
+
+```{r}
+rep("d",6)
+```
+
+Sirve para repetir valores puede repetir un número, una letra o un conjunto de valores varias veces.
+
+## 1,2,3,4,5,1,2,3,4,5
+
+```{r}
+rep(1:5,2)
+```
+
+Repite la secuencia completa dos veces.
+
+## 1,1,2,2,3,3,4,4,5,5
+
+```{r}
+rep(1:5,each=2)
+```
+
+Repite cada número dos veces antes de pasar al siguiente.
+
+## 1,1,1,2,2,2,3,3,3
+
+```{r}
+rep(1:3,each=3)
+```
+
+Repite cada numero 3 veces y pasa al siguiente.
+
+## 1,1,2,3,3,4,5
+
+```{r}
+c(rep(1,2),2,rep(3,2),4,rep(5,2))
+```
+
+No hay un patrón directo, pero se puede combinar rep() para los repetidos y seq() para los consecutivos.
+
+## 1,1,2,2,3,3,4,4,5,5,1,1
+
+```{r}
+c(rep(1:5,each=2),rep(1,2))
+```
+
+Repite cada número dos veces y al final añade dos unos.
+
+## 1,1,2,2,3,3,1,1,2,2,3,3
+
+```{r}
+rep(1:3,each=2,times=2)
+```
+
+Repite la secuencia completa dos veces.
+
+## 2,6,10,14,18,22
+
+```{r}
+seq(2,22,by=4)
+```
+
+Empieza en 2 y aumenta de 4 en 4.
+
+## 2.1,3.1,4.15.1
+
+```{r}
+seq(2.1,5.1,by=1)
+```
+
+Genera números decimales consecutivos.
+
+# VECTOR COLA TAQUILLA
+
+```{r}
+cola <- c("Carlos", "Paola", "Pedro", "Valeria")
+```
+
+## ACTUALIZAR LA COLA
+
+## LLEGA MARIA
+
+```{r}
+cola <- c(cola, "Maria")
+cola
+```
+
+## SEVA CARLOS
+
+```{r}
+cola <- cola[-1]
+cola
+```
+
+## PEDRO SE ABUURE Y SE VA
+
+```{r}
+cola <- cola[cola != "Pedro"]
+cola
+```
+
+# QUE HACEN ESTOS COMANDOS EN R?
+
+## LS
+
+```{r}
+ls()
+
+```
+
+Muestra todos los objetos que estan creados en nuestro entorno de trabajo actual. Es como mirar qué variables o vectores están guardados en la memoria de R.
+
+## RM
+
+```{r}
+rm()
+```
+
+Sirve para eliminar objetos de la memoria.
+
+## SYS.DATE()
+
+```{r}
+Sys.Date()
+```
+
+Devuelve la fecha actual del sistema en formato año-mes-día.
+
+## SYS.TIME()
+
+```{r}
+Sys.time()
+
+```
+
+Devuelve la fecha y la hora exacta del sistema es más detallado que Sys.Data()
+
+## SESSIONINFO()
+
+```{r}
+sessionInfo()
+
+```
+
+Muestra información sobre tu sesión de R: versión de R, paquetes cargados, sistema operativo.
+
+## ctrl + l
+
+No es un comando de R. Sirve para limpiar la consola, es decir, borrar todo lo que aparece en pantalla, aunque los objetos siguen guardados en la memoria.
+
+# VECTOR
+
+```{r}
+x <- c(1,1,1,2,2,2,2,3,3)
+```
+
+## RLE(X)
+
+```{r}
+rle(x)
+```
+
+Lo que hace es analizar el vector y detectar valores repetidos de manera consecutiva, resumiéndolos en dos partes, values son los numeros que aparecen, lengths es son cuantas veces seguidas se repite cada numero.
+
+## NROW(X)
+
+```{r}
+NROW(x)
+
+```
+
+Este comando devuelve el número de filas que tiene el objeto.
+
+## NCOL(X)
+
+```{r}
+ncol(x)
+```
+
+Devuelve el número de columnas que tiene el objeto. En el caso de un vector simple, R lo considera como una sola columna, por lo que el resultado es `1`. En cambio, si se usara `ncol(x)` en un vector, el resultado sería `NULL` porque un vector no tiene estructura de columnas definida.
+
+# VECTORES X1-X2
+
+```{r}
+x1 <- c(1,2,3,4,5)
+x2 <- c(6,7,8)
+
+```
+
+```{r}
+suppressWarnings(x1 + x2)
+
+```
+
+Cuando en R sumas dos vectores que no tienen la misma cantidad de elementos, el programa repite los valores del vector más corto hasta que tenga la misma longitud que el más largo x1 tiene 5 números y x2 tiene 3. R repite x2 como 6,7,8,6,7 para que tenga 5 elementos, y luego suma cada posición: 1+6=7, 2+7=9, 3+8=11, 4+6=10, 5+7=12.
+
+# VECTORES WHICH.MIN-WHICH.MAX
+
+```{r}
+vec <- c(3:8,1:6,7)
+```
+
+## WHICH.MIN
+
+```{r}
+which.min(vec)
+```
+
+Esta función busca el valor más pequeño dentro del vector y devuelve la posición en la que aparece.
+
+## WHICH.MAX
+
+```{r}
+which.max(vec)
+```
+
+Esta función busca el valor más grande dentro del vector y devuelve la posición en la que aparece.
+
+# OUTER(X,Y FUN)
+
+```{r}
+a <- 1:9
+names(a) <- a
+outer(a,a,"*")
+```
+
+```{r}
+x = c(TRUE,FALSE)
+names(x) = x
+outer(x,x,"&")
+outer(x,x,"|")
+```
+
+El código crea un vector con `TRUE` y `FALSE` y usa la función `outer()` para comparar todas las combinaciones posibles. Con `outer(x, x, "&")` se obtiene la tabla del **AND**, donde solo es `TRUE` si ambos valores son `TRUE`. Con `outer(x, x, "|")` se obtiene la tabla del **OR**, donde es `TRUE` si al menos uno de los valores es `TRUE`. En pocas palabras, el código genera automáticamente las tablas de verdad de AND y OR en R.
+
+# COMO CALCULA R?
+
+## 2/3/4
+
+Se evalua de izquierda a derecha primero 2/3 y luego el resultado dividido en 4.
+
+## 4\^3\^2
+
+En R la potencia se evalúa de derecha a izquierda primero 3 a la dos lo que es igual a 9, luego 4 a la nueve seria 262144.
+
+## 2+3\*5
+
+Primero se hace la multiplicación: 3∗5=15, luego la suma: 2+15=17.
+
+# EXPLICAR RESULTADOS
+
+## 1:10-1
+
+```{r}
+1:10-1
+```
+
+En R, la expresión 1:10 genera la secuencia de números del 1 al 10. Luego, al restar -1, R aplica la operación a cada elemento de la secuencia. El resultado es que la secuencia (1,2,3,4,5,6,7,8,9,10) se convierte en (0,1,2,3,4,5,6,7,8,9).
+
+## 1:(10-1)
+
+```{r}
+1:(10-1)
+
+```
+
+Primero se evalúa el paréntesis 10−1=9, y luego se genera directamente la secuencia del 1 al 9, es decir, (1,2,3,4,5,6,7,8,9). La diferencia entre ambas expresiones muestra cómo la colocación de paréntesis cambia el resultado.
+
+# PREDECIR EL RESULTADO
+
+```{r}
+a = 1; b = 5; c=6
+
+```
+
+En la expresión a+b \* (1:c) , primero miramos el paréntesis, que genera la secuencia de números del 1 al 6. Esa secuencia es (1,2,3,4,5,6). Luego, cada número de la secuencia se multiplica por 5, lo que da (5,10,15,20,25,30). Finalmente, a cada uno de esos valores se le suma 1, quedando el resultado final (6,11,16,21,26,31).
+
+```{r}
+a+b * (1:c)
+```
+
+# VECTOR LETTERS
+
+## PRIMEROS 5 ELEMNTOS
+
+```{r}
+letters[1:5]
+```
+
+## LOS 4 ULTIMOS ELEMNTOS
+
+```{r}
+letters[23:26]
+```
+
+## LOS ELEMNTOS 2,8,26
+
+```{r}
+letters[c(2,8,26)]
+```
+
+# COLORS()
+
+## ES UN VECTOR?
+
+```{r}
+colors()
+```
+
+Nos podemos dar cuenta que si es un vector de caracteres porque cada elemento del vector es el nombre de un color reconocido por R.
+
+## QUE ESTRUCTURA TIENE?
+
+La estructura es la de un vector simple de tipocharacter, no es una lista ni un data frame. Esto significa que cada posición contiene una cadena de texto con el nombre de un color.
+
+## CUAL ES SU LONGITUD?
+
+La longitud corresponde al número total de colores disponibles en R. Dependiendo de la versión, en la version 4.5.3 cuenta con 655 colores.
+
+## QUE HACE EL COMANDO HEAD(COLOURS(),(10))?
+
+```{r}
+head(colours(),(10))
+```
+
+La función head() muestra los primeros elementos de un vector. En este caso, devuelve los primeros 10 nombres de colores del vector colors().
+
+## QUE HACE EL COMANDO TAIL(COLORS(),(5))
+
+```{r}
+tail(colors(),5)
+```
+
+La función tail() muestra los últimos elementos de un vector. Aquí devuelve los últimos 5 nombres de colores de colors().
+
+## EN QUE POSICIÓN ESTA EL COLOR "PURPLE"?
+
+```{r}
+which(colors()=="purple")
+```
+
+La función which devuelve la posición en la que se cumple una condición lógica. En este caso, busca dónde el color "purple" aparece dentro del vector colors(). El resultado es un número entero que indica la posición exacta de "purple" en el vector.
+
+# COMANDO DATA()
+
+```{r}
+data()
+```
+
+## ES UNA LISTA?
+
+Sí, devuelve una lista con los conjuntos de datos disponibles en R y en los paquetes cargados.
+
+## QUE ESTRUCTURA TIENE?
+
+Es una lista de objetos que describen datasets.
+
+## CUAL ES SU LONGITUD?
+
+Depende de los paquetes instalados y cargados; puede variar según la configuración del entorno.
+
+# VECTOR CON VALORES PERDIDOS
+
+```{r}
+ v2= c (1,2,NA,3,5,10,NA)
+```
+
+## IS.NA(V2)
+
+```{r}
+is.na(v2)
+```
+
+Esto devuelve un vector lógico que marca con TRUE las posiciones donde hay valores perdidos .
+
+## COMPLETE.CASES(V2)
+
+```{r}
+complete.cases(v2)
+```
+
+Devuelve un vector lógico que indica si cada elemento está completo, es decir no tiene NA.
+
+# EXPLICAR CODIGOS
+
+## 
+
+```{r}
+v3 <- c(2,3,NA,4,5,100,NA,7)
+```
+
+Se crea el vector v3 con números y algunos valores perdidos.
+
+## 
+
+```{r}
+v3 <- v3[!is.na(v3)]
+```
+
+devuelve un vector lógico que marca con TRUE las posiciones donde hay valores perdidos NA. El operador ! niega esos valores, convirtiendo TRUE en FALSE y viceversa, lo que permite seleccionar únicamente los elementos que no son NA.
+
+## 
+
+```{r}
+v3
+```
+
+Nos muestra directamente el vector sin los valores perdidos.
+
+# EXPLICAR CODIGO LINEA POR LINEA
+
+```{r}
+v4 <- 4:11
+```
+
+Crea un vector con la secuencia de numeros de 4 a 11.
+
+## 
+
+```{r}
+v4 > 5
+
+```
+
+Devuelve un vector lógico indicando qué elementos son mayores que 5.
+
+## 
+
+```{r}
+v4[v4>5]
+```
+
+Usa ese vector lógico para filtrar los elementos mayores que 5.
+
+## 
+
+```{r}
+v4[c(rep(TRUE,3),rep(FALSE,4),TRUE)]
+```
+
+Selecciona los primeros tres elementos y el último, dando como resultado (4,5,6,11)
+
+# EXPLICAR CODIGO
+
+```{r}
+v5 <- numeric(0)
+```
+
+Esto crea un vecoctor vacio.
+
+## 
+
+```{r}
+v6 <- vector("integer",7)
+```
+
+Devuelve cero ya que el vector esta vacio.
+
+## 
+
+```{r}
+v6
+```
+
+Nos muestra 0 por la misma razon.
+
+## 
+
+```{r}
+v7 <- vector("numeric",10)
+```
+
+Crea un vector numérico con longitud 10.
+
+## 
+
+```{r}
+v7
+```
+
+Como no se especifica valores, R rellena automáticamente con el valor por defecto para ese tipo de dato, que en el caso de los numéricos es 0.
+
+## 
+
+```{r}
+v8 <- vector("logical",5)
+```
+
+Vector lógico de longitud 5.
+
+## 
+
+```{r}
+v8
+```
+
+Como no se le asignaste valores, por defecto todos son FALSE.
+
+# EXPLICAR SIGUIENTE CODIGO
+
+```{r}
+options(digits=10)
+pi*exp(1)
+pi
+round(pi,5)
+ceiling(pi)
+floor(pi)
+round(seq(1,2,0.1))
+```
+
+`options(digits=10)` ajusta la precisión de impresión a 10 dígitos significativos. Luego, `pi*exp(1)` calcula el producto entre π y el número de Euler, dando aproximadamente 8.539734223. Al imprimir `pi`, se muestra con esa precisión: 3.141592654. Con `round(pi,5)` se redondea π a cinco decimales, obteniendo 3.14159. La función `ceiling(pi)` devuelve el entero más pequeño mayor o igual que π, que es 4, mientras que `floor(pi)` devuelve el entero más grande menor o igual que π, que es 3. Finalmente, `round(seq(1,2,0.1))` genera la secuencia de números de 1 a 2 en pasos de 0.1 y redondea cada valor al entero más cercano.
+
+# VECTOR VECT
+
+```{r}
+vect <- 1:150
+```
+
+## VALORES PARES
+
+```{r}
+vect[vect %% 2 == 0]
+```
+
+## VALORES DIVISBLES POR 17
+
+```{r}
+vect[vect %% 17 == 0]
+```
+
+## NO DIVISIBLES POR 5
+
+```{r}
+vect[vect %% 5 != 0]
+```
+
+## RESIDUO 3 BAJO DIVISION POR 7
+
+```{r}
+vect[vect %% 7 == 3]
+```
+
+# VECTOR LETTERS QUE POSICION OCUPA "V"
+
+```{r}
+which(LETTERS == "V")
+```
+
+Ocupa la posición 22
+
+# QUE HACEN ESTAS FLECHAS ↑, ↓, → y ←
+
+-   **↑ (arriba):** Recupera comandos anteriores del historial.
+
+-   **↓ (abajo):** Avanza en el historial hacia comandos más recientes.
+
+-   **→ (derecha):** Mueve el cursor hacia la derecha dentro de la línea actual.
+
+-   **← (izquierda):** Mueve el cursor hacia la izquierda dentro de la línea actual.
+
+# QUE CLASE CLASS TIENEN
+
+| VALOR | CLASE(CLASS) |
+|-------|--------------|
+| NA    | "logical"    |
+| Inf   | "numeric"    |
+| NaN   | "numeric"    |
+| NULL  | "NULL"       |
+| TRUE  | "logical"    |
+
+# QUE TIPO DE TYPEOF TIENEN
+
+| VALOR | TIPO(TYPEOF) |
+|-------|--------------|
+| NA    | "logical"    |
+| Inf   | "double"     |
+| NaN   | "double"     |
+| NULL  | "NULL"       |
+| TRUE  | "logical"    |
+
+# QUE MODO MODE TIENEN
+
+| VALOR | MODO(MODE) |
+|-------|------------|
+| NA    | "logical"  |
+| Inf   | "numeric"  |
+| NaN   | "numeric"  |
+| NULL  | "NULL"     |
+| TRUE  | "logical"  |
+
+# VERDADERO O FALSO
+
+## TODO SE PUEDE CONVERTIR EN CARÁCTER
+
+Verdadero, ya que cualquier valor numérico entero tiene una representación simbólica en forma de texto, por lo que siempre puede expresarse como cadena de caracteres.
+
+## TODO CARÁCTER SE PUEDE CONVERTIR EN NUMERO
+
+Falso, no todo símbolo o palabra corresponde a un valor numérico válido. Solo aquellos caracteres que representan números pueden transformarse; los demás no tienen equivalencia numérica.
+
+## UN LÓGICO SE PUEDE CONVERTIR EN NUMERO
+
+Verdadero, los valores lógicos tienen una correspondencia definida en el sistema con valores numéricos, lo que permite su conversión sin pérdida de significado.
+
+## UN LÓGICO SE PUEDE CONVERTIR EN CARÁCTER
+
+Verdadero, cualquier valor lógico tiene una representación textual establecida, lo que garantiza que pueda expresarse como cadena de caracteres.
+
+# EXPLICAR QUE HACE EL SIGUIENTE CODIGO
+
+## 
+
+```{r}
+x1 <- 1:200
+```
+
+crea un vector con los números del 1 al 200.
+
+## 
+
+```{r}
+x1[!(x1%%2 == 0) & !(x1%%3 == 0) & !(x1%%7 ==0)]
+```
+
+El resultado es un subconjunto de los números del 1 al 200 que no son divisibles ni por 2, ni por 3, ni por 7.
+
+# FUNCIÓN DUPLICATED SOBRE UN VECTOR
+
+```{r}
+zz <- c(9:12, 1:5, 3:7, 0:6)
+```
+
+Crea un vector con varios numeros y algunos repetidos.
+
+```{r}
+zz
+```
+
+## 
+
+```{r}
+duplicated(zz)
+```
+
+Devuelve un vector lógico que indica cuáles elementos ya aparecieron antes TRUE si es repetido, FALSE si es la primera vez.
+
+## 
+
+```{r}
+zz[!duplicated(zz)]
+```
+
+Elimina los duplicados y devuelve solo los valores únicos en el orden en que aparecen por primera vez.
+
+# PAQUETE LEAFLET
+
+```{r}
+library(leaflet)
+```
+
+```{r}
+m <- leaflet() %>%
+ addTiles() %>%
+ addMarkers(lng=-74.056159, lat=4.656844, popup="Universidad Santo
+Tomás")
+m
+```
+
+# REALIZAR LAS SIGUIENTES ACTIVIDADES
+
+## INSTALAR EL PAQUETE miEcon Y CARGARLO
+
+```{r}
+library(micEcon)
+```
+
+## OBTENER LOS CONJUNTOS DE DATOS DEL PAQUETE
+
+```{r}
+data(package = "micEcon")
+```
+
+## SOLICITAR AYUDA SOBRE EL CONJUNTO DE DATOS MISSONG03E7.7
+
+```{r}
+help("Missong03E7.7", package = "micEcon")
+```
+
+## OBTENER TODAS LAS FUNCIONES DEL PAQUETE MICECON
+
+```{r}
+ls("package:micEcon")
+```
+
+## DESACTIVAR EL PAQUETE MICECON
+
+```{r}
+detach("package:micEcon", unload = TRUE)
+```
+
+### OBTENER LA LISTA DE LAS VIÑETAS DEL PAQUETE KNITR
+
+```{r}
+vignette(package = "knitr")
+```
+
+## ABRIR LA VIÑETA KNITR-MARKDOWN
+
+```{r}
+vignette("knitr-markdown", package = "knitr")
+```
+
+# MATRICES
+
+![](images/Captura%20de%20pantalla%202026-04-03%20124431.png)
+
+## 
+
+```{r}
+matrix(c(1,sqrt(5),-2,0),2,2)
+```
+
+## 
+
+```{r}
+matrix(1:6,3,2)
+```
+
+## 
+
+```{r}
+matrix(0,3,3)
+```
+
+## 
+
+```{r}
+diag(1,3,3)
+```
+
+# CREAR LAS SIGUIENTES MATRICES
+
+![](images/Captura%20de%20pantalla%202026-04-03%20124645.png)
+
+## 
+
+```{r}
+A <- matrix(c(4, -5, -0.3, 2.7), nrow = 2, ncol = 2, byrow = TRUE)
+rownames(A) <- c("F1", "F2")
+colnames(A) <- c("C1", "C2")
+knitr::kable(A, caption = "MATRIZ A")
+ 
+```
+
+## 
+
+```{r}
+B <- matrix(c(3, -0.5, 0.8,
+              -8, 1.27, 1.25,
+              1, 3, 2), nrow = 3, ncol = 3, byrow = TRUE)
+rownames(B) <- c("R1", "R2", "R3")
+colnames(B) <- c("C1", "C2", "C3")
+knitr::kable(B, caption = "MATRIZ B")
+
+```
+
+# EXPLICAR QUE HACEN LAS SIGUEINTES FUNCIONES DE R
+
+| No | FUNCIÓN | DESCRIPCIÓN |
+|------------------|------------------|-------------------------------------|
+| 1 | Lenght() | Número total de elementos en la matriz ( filas\*columnas) |
+| 2 | dim() | Devuelve las dimensiones, numero de filas y columnas |
+| 3 | det() | Calcula el determinante( solo si la matriz es cuadrada) |
+| 4 | diag() | Extrae los elementos de la diagonal principal o crea una matrix diagonal |
+| 5 | prod() | Producto de todos los elemntos de la matriz |
+| 6 | min() | Valor minimo entre los elementos |
+| 7 | max() | Valor maximo de los elementos |
+| 8 | mean() | Promedio de los elementos |
+| 9 | sd() | Desviación estandar |
+| 10 | var() | Varianza de los elemntos |
+| 11 | t(x) | Transpuesta de la matriz( intercambia filas y columnas) |
+| 12 | eigen(x\*x) | Calcula valores propios y vectores propios |
+
+# EXPLICAR EL CODIGO
+
+## 
+
+```{r}
+m2 <- numeric(9)
+
+
+```
+
+Crea un vector numérico de longitud 9 lleno de ceros.
+
+## 
+
+```{r}
+m2
+```
+
+## 
+
+```{r}
+is.vector(m2)
+```
+
+Comprueba si m2 es un vector, y devuelve TRUE.
+
+## 
+
+```{r}
+attributes(m2)
+
+```
+
+Se revisa los atributos del vector. Como es un vector simple, no tiene atributos especiales.
+
+## 
+
+```{r}
+dim(m2) <- c(3,3)
+```
+
+Les asigna dimensiones al vector, convirtiéndolo en una matriz de 3×3.
+
+```{r}
+m2
+```
+
+Se organiza la matriz de ceros organizada en filas y columnas.
+
+## 
+
+```{r}
+attributes(m2)
+
+```
+
+Se agrega dim con valor (3,3) lo que confirma que ya no es un vector sino una matriz.
+
+## 
+
+```{r}
+m3 <- matrix(0,4,4)
+```
+
+Se crea una matriz de 4×4 llena de ceros.
+
+## 
+
+```{r}
+m3
+```
+
+Se muestra una estructura cuadrada llena de ceros.
+
+# FUNCIÓN TEXTTT{CBIND()} Y TEXTTT{RBIND()}
+
+```{r}
+A <- matrix(1:6,3,2)
+```
+
+```{r}
+B <- matrix(2:7,3,2)
+```
+
+## 
+
+```{r}
+A;B
+```
+
+Nos muestras las dos matrices.
+
+## 
+
+```{r}
+cbind(A,B)
+```
+
+Combina las matrices por columnas. Es decir coloca las columnas de B a la derecha de las columnas de A.
+
+## 
+
+```{r}
+rbind(A,B)
+```
+
+combina las matrices por filas. Es decir, coloca las filas de B debajo de las filas de A.
+
+# DADA LA MATRIZ
+
+```{r}
+M <- matrix(1:16, nrow=4, ncol=4, byrow=FALSE)
+M
+```
+
+## EXTRAER:
+
+## EL ELEMENTO (2,3)
+
+```{r}
+M[2,3]
+```
+
+## LOS ELEMNTOS 11 Y 12
+
+```{r}
+M[3,3]; M[4,3]
+```
+
+## LA SEGUNDA FILA
+
+```{r}
+M[2, ]
+```
+
+## LA TERCERA COLUMNA
+
+```{r}
+M[, 3]
+```
+
+## LA PRIMERA Y CUARTA COLUMNA
+
+```{r}
+M[, c(1,4)]
+```
+
+## LA PRIMERA Y TERCERA FILA
+
+```{r}
+M[c(2,3), ]
+```
+
+## LOS ELEMNTOS DE LA PRIMERA Y SEGUNDA FILA Y DE LA TERCERA Y CUARTA COLUMNAS
+
+```{r}
+M[1:2, 3:4]
+```
+
+# DADA LA MATRIZ
+
+```{r}
+A <- matrix(1:16, nrow=4, ncol=4, byrow=FALSE)
+```
+
+```{r}
+A
+```
+
+## 𝐴\[𝑐(13, 14)\]
+
+```{r}
+A[c(13,14)]
+```
+
+c(13,14) indica que queremos los elementos número 13 y 14 de la matriz, contando en orden columna por columna. El 13 corresponde al valor en fila 1, columna 4 → 13 y el 14 corresponde al valor en fila 2, columna 4 → 14.
+
+## 𝐴\[4, \]
+
+```{r}
+```
+
+El 4 nos indica la cuarta fila, el espacio vacio despues de la coma significa toda las columnas.
+
+## 𝐴\[, 2\]
+
+```{r}
+A[, 2]
+```
+
+El espacio antes de la coma significa todas las filas, el 2 significa indica la segunda columna.
+
+## 𝐴\[𝑐(1, 2), 𝑐(3, 4)\]
+
+```{r}
+A[c(1,2), c(3,4)]
+```
+
+c(1,2) selecciona las filas 1 y 2 . c(3,4) selecciona las columnas. Lo que forma una submatriz formada por esas filas, columnas.
+
+# DADAS LAS MATRICES OBTENER
+
+![](images/Captura%20de%20pantalla%202026-04-03%20211625.png)
+
+```{r}
+A <- matrix(c(1, 2, -0.5,
+              -3, 4, -1.5,
+              2, 0, -1,
+              3, -1.5, 2),
+            nrow=4, ncol=3, byrow=TRUE)
+```
+
+```{r}
+B <- matrix(c(1, 0.2, 4,
+              -1.5, 1.1, -0.7,
+              1.1, -1, 1.1,
+              1.6, 0.3, -0.5),
+            nrow=3, ncol=4, byrow=FALSE)
+```
+
+## 
+
+```{r}
+A %*% B
+```
+
+## 
+
+```{r}
+t(A)
+```
+
+## 
+
+```{r}
+t(B) %*% t(A)
+```
+
+```{r}
+solve(t(A) %*% A)
+```
+
+## 
+
+```{r}
+B %*% t(B) + t(A) %*% A
+```
+
+# SISTEMA DE ECUACIONES
+
+![](images/Captura%20de%20pantalla%202026-04-03%20211801.png)
+
+## 
+
+```{r}
+A <- matrix(c(3,1,1,-1), nrow=2, byrow=TRUE)
+```
+
+Crea la matriz de coeficientes A
+
+```{r}
+B <- matrix(c(11,-1), nrow=2)
+```
+
+Crea el vector de resultados B
+
+```{r}
+solve(A, B)
+```
+
+Resuelve el sistema A⋅X=B, devolviendo el vector de incógnitas X=(x,y)
+
+# LISTAS
+
+## DATASED
+
+```{r}
+lista1 <- list(persona="Carlos",vector=c(pi,exp(1)),
+ matriz=matrix(16:1,4,4), arreglo=array(24:1,c(2,3,4)))
+```
+
+## EXTRAIGA EL ELEMENTO (2,2) DE LA MATRIZ
+
+```{r}
+lista1$matriz[2,2]
+```
+
+Devuelve el valor en la fila 2, columna 2 de la matriz
+
+## EXTRAIGA EL ELEMENTO (2,2,2) DEL ARREGLO
+
+```{r}
+lista1$arreglo[2,2,2]
+```
+
+Devuelve el valor en la posición fila 2, columna 2, capa 2 del arreglo tridimensional.
+
+## QUE EXTRAE \[\[1\]\]?
+
+```{r}
+lista1[[1]]
+```
+
+Devuelve el primer elemento de la lista, que es "Carlos".
+
+## QUE EXTRAE LISTA1 \[\[3\]\]\[3,3\]?
+
+```{r}
+lista1[[3]][3,3]
+```
+
+Accede al tercer elemento de la lista y luego al valor en la fila 3, columna 3.
+
+## QUE EXTRAE LIST1\\\$ARREGLO?
+
+```{r}
+lista1$arreglo
+```
+
+Devuelve todo el arreglo tridimensional completo.
+
+## QUE EXTRAE LISTA1\[\["MATRIZ"\]\]?
+
+```{r}
+lista1[["matriz"]]
+```
+
+Devuelve la matriz completa que está guardada en la lista.
+
+# QUE ESTRUCTURA TIENEN LOS SIGUIENTES OBJETOS
+
+## 
+
+```{r}
+ip <- installed.packages()
+```
+
+Devuelve una matriz con información de todos los paquetes instalados.
+
+## 
+
+```{r}
+aip <- attributes(ip)
+```
+
+Muestra los atributos de esa matriz, como dimensiones y nombres de columnas.
+
+## 
+
+```{r}
+naip <- aip[[2]][1]
+
+```
+
+Extrae el primer nombre de columna de la matriz.
+
+## 
+
+```{r}
+rnip <- rownames(ip)
+
+```
+
+Devuelve los nombres de fila, que corresponden a los nombres de los paquetes instalados.
+
+## CUANTOS PAQUETES TIENE INSTALDOS EN SU RSTUDIO?
+
+```{r}
+nrow(ip)
+```
+
+Tengo descargados 163 paquetes.
+
+# SERIES DE TIEMPO
+
+# QUE SON Y QUE CONTIENEN LOS SIGUIENTES LOS SIGUIENTES OBJETOS DE R
+
+## 
+
+```{r}
+month.abb
+```
+
+Vector con las abreviaturas de los meses en inglés.
+
+## 
+
+```{r}
+month.name
+
+```
+
+Vector con los nombres completos de los meses.
+
+# RESOLVER
+
+## CONSTRUIR UNA SERIE DE TIEMPO SEMESTRAL CON 20 DATOS QUE EMPIECE EN 2011
+
+```{r}
+datos <- rnorm(20)
+```
+
+```{r}
+semestral <- ts(datos, start = 2011, frequency = 2)
+```
+
+```{r}
+semestral
+```
+
+## SERIE DE TIEMPO BIANUALES, EMPIEZA EN 2014
+
+```{r}
+datos2 <- rnorm(15)
+```
+
+```{r}
+bianuales <- ts(datos2, start = 2014, frequency = 0.5)
+```
+
+```{r}
+bianuales
+```
+
+## SERIE DE TIEMPO MENSUAL QUE EMPIEZE EN ENERO DE 2015 Y TERMINE EN DICIEMBRE DE 2018, EXTRAER DATOS DE 2017
+
+```{r}
+datos3 <- rnorm(48)
+```
+
+```{r}
+st3 <- ts(datos3, start = c(2015, 1), frequency = 12)
+```
+
+```{r}
+st3_2017 <- window(st3, start = c(2017, 1), end = c(2017, 12))
+```
+
+```{r}
+st3_2017
+```
